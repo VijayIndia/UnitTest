@@ -47,11 +47,11 @@ public class BookService {
 		return bookIds.toArray(new String[bookIds.size()]);
 	}
 
-	public List<String> getBookTitlesByPublisher(String publisher) {
+	public List<String> getBookTitlesByPublisher(List<String> publisher) {
 		List<String> bookTitles = new ArrayList<>();
 		System.out.println("publisher->"+publisher+"listOfBooks->"+listOfBooks);
 		for(Book book : listOfBooks) {
-			if(publisher.equals(book.getPublisher())) {
+			if(publisher.contains(book.getPublisher())) {
 				bookTitles.add(book.getTitle());
 			}
 		}
@@ -85,5 +85,8 @@ public class BookService {
 		throw new BookNotFoundException("Book not found in Bookstore!");
 	}
 
+    public int getListOfBooks(int count){
+	    return count;
+    }
 
 }

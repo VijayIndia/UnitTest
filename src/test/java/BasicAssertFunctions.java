@@ -3,6 +3,7 @@ import com.hubberspot.junit5.bookstore.service.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -61,4 +62,41 @@ public class BasicAssertFunctions {
         );
     }
 
+    @Test
+    public void basicAssertArrayEqualsFunction(){
+        assertAll(
+                    ()-> assertArrayEquals(new String[]{"1"},bookService.getBookIdsByPublisher("Publisher1")),
+                    ()->assertArrayEquals(new String[1],bookService.getBookIdsByPublisher("Publisher1"),"Assert Array Condition failed"),
+                    ()->assertArrayEquals(new String[1],bookService.getBookIdsByPublisher("Publisher1"),supplierMsg));
+    }
+
+    @Test
+    public void basicAssertIterableEquals(){
+        List<String> bookTitles=new ArrayList<>();
+        bookTitles.add("Title1");
+        bookTitles.add("Title2");
+
+        List<List<String>> arrList=new ArrayList<List<String>>();
+        List<String> subList1=new ArrayList<>();
+        subList1.add("Publisher1");
+        List<String> subList2=new ArrayList<>();
+        subList2.add("Publisher2");
+        arrList.add(subList1);
+        arrList.add(subList2);
+
+        List<List<String>> arrList2=new ArrayList<List<String>>();
+        List<String> newSubList1=new ArrayList<>();
+        newSubList1.add("Publisher3");
+        List<String> newSubList2=new ArrayList<>();
+        newSubList2.add("Publisher1");
+        arrList2.add(newSubList1);
+        arrList2.add(newSubList2);
+
+        List<String> newbBookTitles=new ArrayList<>();
+        newbBookTitles.add("Title2");
+        newbBookTitles.add("Title1");
+        assertIterableEquals(arrList,arrList2);//bookService.getBookTitlesByPublisher(arrList));
+      //  assertEquals(bookTitles,newbBookTitles);
+       // assertEquals(arrList,arrList2);
+    }
 }
